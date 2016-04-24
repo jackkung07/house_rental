@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/controller/main_controller.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/Counter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/landlord/Address.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/landlord/HouseInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/landlord/Landlord.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/landlord/LongLatService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/review/Review.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/tenant/Favorite.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/entity/tenant/Tenant.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/landlord/LandlordRepo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/landlord/LandlordRepoCustom.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/landlord/LandlordRepoImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/review/ReviewRepo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/review/ReviewRepoCustom.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/review/ReviewRepoImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/tenant/TenantRepo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/tenant/TenantRepoCustom.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/repository/tenant/TenantRepoImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/service/CounterService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/service/landlord/LandlordServices.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/service/landlord/LanlordServicesImp.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/service/tenant/TenantServices.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/service/tenant/TenantServicesImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/houserental/test/Application.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/applicationContext.xml" charset="UTF-8" />
+  </component>
+</project>
