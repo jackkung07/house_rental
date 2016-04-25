@@ -33,7 +33,7 @@ public class HouseInfo {
 
     public HouseInfo() {}
 
-    public HouseInfo(Address address, String propertyType, int numOfBathroom, int numOfBedroom, double sqrtft, double price, String description, String status, String postingDate) {
+    public HouseInfo(String landlordName, Address address, String propertyType, int numOfBathroom, int numOfBedroom, double sqrtft, double price, String description, String status, String postingDate) {
         super();
         this.address = address;
         this.propertyType = propertyType;
@@ -44,6 +44,7 @@ public class HouseInfo {
         this.description = description;
         this.status = status;
         this.postingDate = postingDate;
+        this.landlordName=landlordName;
     }
 
     public String getHouseId() {
