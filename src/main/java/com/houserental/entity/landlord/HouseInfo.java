@@ -9,7 +9,7 @@ public class HouseInfo {
 
     private String houseId;
 
-    private String landlordName;
+    private String landlordFbId;
 
     private Address address;
 
@@ -33,7 +33,8 @@ public class HouseInfo {
 
     public HouseInfo() {}
 
-    public HouseInfo(String landlordName, Address address, String propertyType, int numOfBathroom, int numOfBedroom, double sqrtft, double price, String description, String status, String postingDate) {
+    public HouseInfo(String landlordFbId, Address address, String propertyType, int numOfBathroom, int numOfBedroom, double sqrtft, double price, String description, String status, String postingDate) {
+        this.landlordFbId=landlordFbId;
         this.address = address;
         this.propertyType = propertyType;
         this.numOfBathroom = numOfBathroom;
@@ -43,7 +44,6 @@ public class HouseInfo {
         this.description = description;
         this.status = status;
         this.postingDate = postingDate;
-        this.landlordName=landlordName;
     }
 
     public String getHouseId() {
@@ -54,12 +54,12 @@ public class HouseInfo {
         this.houseId = houseId;
     }
 
-    public String getlandlordName() {
-        return landlordName;
+    public String getLandlordFbId() {
+        return landlordFbId;
     }
 
-    public void setlandlordName(String landlordName) {
-        this.landlordName = landlordName;
+    public void setLandlordFbId(String landlordFbId) {
+        this.landlordFbId = landlordFbId;
     }
 
     public Address getAddress() {
