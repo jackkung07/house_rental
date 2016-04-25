@@ -6,12 +6,14 @@ import com.houserental.entity.landlord.Landlord;
 import com.houserental.entity.tenant.Favorite;
 import com.houserental.entity.tenant.Tenant;
 import com.houserental.service.landlord.LandlordServices;
+import com.houserental.service.tenant.TenantServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,8 @@ public class main_controller {
 
     @Autowired
     LandlordServices landlordServices;
+    @Autowired
+    TenantServices tenantServices;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printWelcome() {
@@ -60,6 +64,7 @@ public class main_controller {
     @RequestMapping(value="/landlord", method = RequestMethod.GET)
     public Landlord landlord_testing() {
 
+
         List<HouseInfo> house_list = new ArrayList<HouseInfo>();
         HouseInfo test_house = new HouseInfo();
         test_house.setHouseId("0001");
@@ -87,8 +92,6 @@ public class main_controller {
         test_landlord.setEmail("ivanybma@yahoo.com");
         test_landlord.setPhoneNum("415-361-2832");
         test_landlord.setHouseOwned(house_list);
-
-
 
         return test_landlord;
     }
@@ -118,19 +121,35 @@ public class main_controller {
         test_house.setAddress(test_address);
         house_list.add(test_house);
 
-        return house_list;
+        if(tenantServices.listAllHouseInfo().size()==0)
+            return house_list;
+        else
+            return tenantServices.listAllHouseInfo();
+
+
+
     }
 
-    @RequestMapping(value="/addhouse", method = RequestMethod.GET)
-    public void addLandlord() {
+    @RequestMapping(value="/addhouse/{ldname}/{address}/{city}", method = RequestMethod.POST)
+    public void addhouse(@PathVariable("ldname") String ldname, @PathVariable("address") String address,@PathVariable("city") String city) {
         HouseInfo test_house = new HouseInfo();
+        test_house.setlandlordName(ldname);
         test_house.setStatus("open");
         Address test_address = new Address();
-        test_address.setAddress("1234 A st.");
-        test_address.setCity("san jose");
+        test_address.setAddress(address);
+        test_address.setCity(city);
         test_address.setState("ca");
         test_house.setAddress(test_address);
-        landlordServices.addHousing("jack", test_house);
+        landlordServices.addHousing(ldname, test_house);
+    }
+
+    @RequestMapping(value="/addlandlord/{name}", method = RequestMethod.POST)
+    public Landlord addLandlord(@PathVariable("name") String name) {
+
+        Landlord landlord=new Landlord();
+        landlord.setName(name);
+        return landlordServices.newLandlord(landlord);
+
     }
 
 
