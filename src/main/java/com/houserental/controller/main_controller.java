@@ -44,16 +44,17 @@ public class main_controller {
         System.out.println("xxx");
         Favorite test_favorite = new Favorite();
         test_favorite.setHouseId("0001");
-        test_favorite.setLandlordName("ivan");
+        test_favorite.setLandlordfbId("ivan");
         List<Favorite> fl = new ArrayList<Favorite>();
         fl.add(test_favorite);
 
         test_favorite = new Favorite();
         test_favorite.setHouseId("0002");
-        test_favorite.setLandlordName("ivan");
+        test_favorite.setLandlordfbId("ivan");
         fl.add(test_favorite);
 
-        Tenant test_tenant = new Tenant("Petter");
+        Tenant test_tenant = new Tenant();
+        test_tenant.setName("Peter");
         test_tenant.setTenantId("0001");
         test_tenant.setFavoriteList(fl);
 
@@ -91,7 +92,7 @@ public class main_controller {
         test_landlord.setName("ivan");
         test_landlord.setEmail("ivanybma@yahoo.com");
         test_landlord.setPhoneNum("415-361-2832");
-        test_landlord.setHouseOwned(house_list);
+        test_landlord.setHouseInfoList(house_list);
 
         return test_landlord;
     }

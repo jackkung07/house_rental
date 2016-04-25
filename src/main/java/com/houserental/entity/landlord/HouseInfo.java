@@ -23,7 +23,7 @@ public class HouseInfo {
 
     private double price;
 
-    private List<String> reviewIds;
+    private List<String> reviewIdList;
 
     private String description;
 
@@ -111,12 +111,12 @@ public class HouseInfo {
         this.price = price;
     }
 
-    public List<String> getReviewIds() {
-        return reviewIds;
+    public List<String> getReviewIdList() {
+        return reviewIdList;
     }
 
-    public void setReviewRefList(List<String> reviewIds) {
-        this.reviewIds = reviewIds;
+    public void setReviewIdList(List<String> reviewIdList) {
+        this.reviewIdList = reviewIdList;
     }
 
     public String getDescription() {
@@ -144,6 +144,6 @@ public class HouseInfo {
     }
 
     public void addReviewId(String reviewId){
-        reviewIds.add(reviewId);
+        reviewIdList.add(reviewId);
     }
 }

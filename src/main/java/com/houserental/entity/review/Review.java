@@ -12,11 +12,11 @@ public class Review {
     @Id
     private String reviewId;
 
-    private String landlordName;
+    private String landlordfbId;
 
     private String houseId;
 
-    private String tenantName;
+    private String tenantfbId;
 
     private String date;
 
@@ -27,8 +27,11 @@ public class Review {
     public Review() {}
 
     @PersistenceConstructor
-    public Review(String date, String rating, String description) {
+    public Review(String landlordfbId, String houseId, String tenantfbId, String date, String rating, String description) {
         super();
+        this.landlordfbId = landlordfbId;
+        this.houseId = houseId;
+        this.tenantfbId = tenantfbId;
         this.date = date;
         this.rating = rating;
         this.description = description;
@@ -42,12 +45,12 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public String getLandlordName() {
-        return landlordName;
+    public String getLandlordfbId() {
+        return landlordfbId;
     }
 
-    public void setLandlordName(String landlordName) {
-        this.landlordName = landlordName;
+    public void setLandlordfbId(String landlordfbId) {
+        this.landlordfbId = landlordfbId;
     }
 
     public String getHouseId() {
@@ -58,12 +61,12 @@ public class Review {
         this.houseId = houseId;
     }
 
-    public String getTenantName() {
-        return tenantName;
+    public String getTenantfbId() {
+        return tenantfbId;
     }
 
-    public void setTenantName(String tenantName) {
-        this.tenantName = tenantName;
+    public void setTenantfbId(String tenantfbId) {
+        this.tenantfbId = tenantfbId;
     }
 
     public String getDate() {

@@ -18,9 +18,11 @@ public class Landlord {
     private String landlordId;
 
     //unique
+    private String facebookId;
+
     private String name;
 
-    private List<HouseInfo> houseOwned = new ArrayList<HouseInfo>();
+    private List<HouseInfo> houseInfoList = new ArrayList<HouseInfo>();
 
     private String phoneNum;
 
@@ -30,8 +32,10 @@ public class Landlord {
     }
 
     @PersistenceConstructor
-    public Landlord(String phoneNum, String email) {
+    public Landlord(String facebookId, String name, String phoneNum, String email) {
         super();
+        this.facebookId = facebookId;
+        this.name = name;
         this.phoneNum = phoneNum;
         this.email = email;
     }
@@ -45,6 +49,14 @@ public class Landlord {
         this.landlordId = landlordId;
     }
 
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
     public String getName() {
         return name;
     }
@@ -53,12 +65,12 @@ public class Landlord {
         this.name = name;
     }
 
-    public List<HouseInfo> getHouseOwned() {
-        return houseOwned;
+    public List<HouseInfo> getHouseInfoList() {
+        return houseInfoList;
     }
 
     public HouseInfo getHouseById(String houseId) {
-        for (HouseInfo house : houseOwned) {
+        for (HouseInfo house : houseInfoList) {
             if (house.getHouseId().endsWith(houseId)) {
                 return house;
             }
@@ -67,16 +79,16 @@ public class Landlord {
     }
 
     public void setHouseById(String houseId, HouseInfo house){
-        houseOwned.set(Integer.parseInt(houseId), house);
+        houseInfoList.set(Integer.parseInt(houseId), house);
     }
 
     public void addHouse(HouseInfo newHouse) {
-        newHouse.setHouseId(Integer.toString(houseOwned.size()));
-        houseOwned.add(newHouse);
+        newHouse.setHouseId(Integer.toString(houseInfoList.size()));
+        houseInfoList.add(newHouse);
     }
 
-    public void setHouseOwned(List<HouseInfo> houseOwned) {
-        this.houseOwned = houseOwned;
+    public void setHouseInfoList(List<HouseInfo> houseInfoList) {
+        this.houseInfoList = houseInfoList;
     }
 
     public String getPhoneNum() {
@@ -96,11 +108,11 @@ public class Landlord {
     }
 
     public int getNumOfHouses() {
-        return houseOwned.size();
+        return houseInfoList.size();
     }
 
     @Override
     public String toString() {
-        return "Landlord [landlordId= " + landlordId + ", phone number= " + phoneNum + ", email= " + email + ", houseOwned= " + houseOwned + "]";
+        return "Landlord [landlordId= " + landlordId + ", phone number= " + phoneNum + ", email= " + email + ", houseInfoList= " + houseInfoList + "]";
     }
 }

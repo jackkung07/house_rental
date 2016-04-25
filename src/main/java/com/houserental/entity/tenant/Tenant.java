@@ -16,21 +16,22 @@ public class Tenant {
     private String tenantId;
 
     //unique
+    private String facebookId;
+
     private String name;
 
     private List<String> reviewIdList;
 
     private List<Favorite> favoriteList;
 
-    private List<String> reviewIds;
-
     public  Tenant() {
 
     }
 
     @PersistenceConstructor
-    public Tenant(String name) {
+    public Tenant(String facebookId, String name) {
         super();
+        this.facebookId = facebookId;
         this.name = name;
     }
 
@@ -40,6 +41,14 @@ public class Tenant {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
     }
 
     public String getName() {
@@ -68,14 +77,6 @@ public class Tenant {
 
     public void addFavorite(Favorite favorite){
         favoriteList.add(favorite);
-    }
-
-    public List<String> getReviewRefList() {
-        return reviewIds;
-    }
-
-    public void setReviewRefList(List<String> reviewRefList) {
-        this.reviewIds = reviewIds;
     }
 
     public void addReviewId(String reviewId){
