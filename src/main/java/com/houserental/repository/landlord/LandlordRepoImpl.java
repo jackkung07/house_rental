@@ -28,11 +28,11 @@ public class LandlordRepoImpl implements LandlordRepoCustom {
     @Override
     public void chgHouseSts(String landlordName, String houseid, String status) {
         Landlord landlord = landlordRepo.findByName(landlordName);
-        for(int i=0; i<landlord.getHouseOwned().size(); i++)
+        for(int i=0; i<landlord.getHouseInfoList().size(); i++)
         {
-            if(landlord.getHouseOwned().get(i).getHouseId().equals(houseid))
+            if(landlord.getHouseInfoList().get(i).getHouseId().equals(houseid))
             {
-                landlord.getHouseOwned().get(i).setStatus(status);
+                landlord.getHouseInfoList().get(i).setStatus(status);
                 break;
             }
         }
@@ -46,7 +46,7 @@ public class LandlordRepoImpl implements LandlordRepoCustom {
 
         if(houseid.length()==0) //need to retrieve all the review for this landlord
         {
-            List<HouseInfo> houseInfoList = landlord.getHouseOwned();
+            List<HouseInfo> houseInfoList = landlord.getHouseInfoList();
             for(int i=0; i<houseInfoList.size();i++)
             {
                 List<Review> tmplst = new ArrayList<Review>(reviewRepo.findByHouseId(houseInfoList.get(i).getHouseId()));

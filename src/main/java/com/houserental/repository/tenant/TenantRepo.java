@@ -11,6 +11,9 @@ public interface TenantRepo extends CrudRepository<Tenant, String>, TenantRepoCu
     @Query("{'_id' : ?0}")
     public Tenant findById(String id);
 
+    @Query("{'facebookId' : ?0}")
+    public Tenant findByFbId(String facebookId);
+
     @Query("{'name' : ?0}")
     public Tenant findByName(String name);
 }

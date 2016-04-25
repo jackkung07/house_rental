@@ -11,7 +11,14 @@ import java.util.List;
  * Created by ivanybma on 4/19/16.
  */
 
+
 public interface LandlordServices {
+
+    //find landlord by fbId
+    public Landlord findLandlordByFbId(String fbId);
+
+    //add landlord info
+    public void addLandlord(Landlord landlord);
 
 //    add new house posting
     public void addHousing(String ldname, HouseInfo house);

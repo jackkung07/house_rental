@@ -8,18 +8,17 @@ import com.houserental.entity.tenant.Tenant;
 import com.houserental.service.landlord.LandlordServices;
 import com.houserental.service.tenant.TenantServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by ivanybma on 4/16/16.
@@ -36,6 +35,48 @@ public class main_controller {
     public String printWelcome() {
         return "hello";
     }
+
+    @RequestMapping(value = "/landlordLogin", method = RequestMethod.POST)
+    public ResponseEntity<?> landlordLogIn(@RequestBody Landlord landlord){
+        String fbId = landlord.getFacebookId();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if(findLandlordByFbId(fbId) == false){
+            landlordServices.addLandlord(landlord);
+            httpHeaders.add("landlordLogin", "landlord added");
+            return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.CREATED);
+        }
+        httpHeaders.add("landlordLogin", "landlord exists");
+        return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.OK);
+    }
+
+    private boolean findLandlordByFbId(String fbId){
+        if(landlordServices.findLandlordByFbId(fbId)!= null){
+            return true;
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/tenantLogin", method = RequestMethod.POST)
+    public ResponseEntity<?> tenantLogIn(@RequestBody Tenant tenant){
+        String fbId = tenant.getFacebookId();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if(findTenantdByFbId(fbId) == false){
+            tenantServices.addTenant(tenant);
+            httpHeaders.add("tenantLogin", "tenant added");
+            return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.CREATED);
+        }
+        httpHeaders.add("tenantLogin", "tenant exists");
+        return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.OK);
+    }
+
+    private boolean findTenantdByFbId(String fbId){
+        if(tenantServices.findTenantByFbId(fbId)!= null){
+            return true;
+        }
+        return false;
+    }
+
+
 
 
     @RequestMapping(value="/tenant", method = RequestMethod.GET)

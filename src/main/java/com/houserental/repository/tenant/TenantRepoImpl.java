@@ -21,27 +21,27 @@ public class TenantRepoImpl implements TenantRepoCustom{
     ReviewRepo reviewRepo;
 
     @Override
-    public void addFavorite(String tenantName, String landlordName, String houseId, Favorite favorite){
-        Tenant tenant = tenantRepo.findByName(tenantName);
-        favorite.setLandlordName(landlordName);
+    public void addFavorite(String tenantFbId, String landlordFbId, String houseId, Favorite favorite){
+        Tenant tenant = tenantRepo.findByFbId(tenantFbId);
+        favorite.setLandlordfbId(landlordFbId);
         favorite.setHouseId(houseId);
         tenant.addFavorite(favorite);
         tenantRepo.save(tenant);
     }
 
     @Override
-    public void addReview(String tenantName, String landlordName, String houseId, Review review) {
+    public void addReview(String tenantFbId, String landlordFbId, String houseId, Review review) {
 
-        Tenant tenant = tenantRepo.findByName(tenantName);
+        Tenant tenant = tenantRepo.findByFbId(tenantFbId);
 
-        Landlord landlord = landlordRepo.findByName(landlordName);
+        Landlord landlord = landlordRepo.findByFbId(landlordFbId);
 
         HouseInfo house = landlord.getHouseById(houseId);
 
 
-        review.setLandlordName(landlord.getName());
+        review.setLandlordfbId(landlord.getFacebookId());
         review.setHouseId(house.getHouseId());
-        review.setTenantName(tenant.getName());
+        review.setTenantfbId(tenant.getFacebookId());
 
 
         Review rev = reviewRepo.save(review);

@@ -12,6 +12,9 @@ public interface LandlordRepo extends CrudRepository<Landlord, String>, Landlord
     @Query("{'_id' : ?0}")
     public Landlord findById(String id);
 
+    @Query("{'facebookId' : ?0}")
+    public Landlord findByFbId(String facebookId);
+
     @Query("{'name' : ?0}")
     public Landlord findByName(String landlordName);
 

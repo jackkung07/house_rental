@@ -19,6 +19,18 @@ public class LanlordServicesImp implements LandlordServices {
     @Autowired
     LandlordRepo landlordRepo;
 
+
+    @Override
+    public Landlord findLandlordByFbId(String fbId) {
+        return landlordRepo.findByFbId(fbId);
+    }
+
+    @Override
+    public void addLandlord(Landlord landlord) {
+        landlordRepo.save(landlord);
+    }
+
+
     @Override
     public void addHousing(String ldname, HouseInfo house) {
         landlordRepo.addHouse(ldname,house);
@@ -41,7 +53,7 @@ public class LanlordServicesImp implements LandlordServices {
 
     @Override
     public List<HouseInfo> rtvAllPhouse(String ldname) {
-        return landlordRepo.findByName(ldname).getHouseOwned();
+        return landlordRepo.findByName(ldname).getHouseInfoList();
     }
 
     @Override

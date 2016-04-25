@@ -4,6 +4,7 @@ import com.houserental.entity.landlord.HouseInfo;
 import com.houserental.entity.landlord.Landlord;
 import com.houserental.entity.review.Review;
 import com.houserental.entity.tenant.Favorite;
+import com.houserental.entity.tenant.Tenant;
 import com.houserental.repository.landlord.LandlordRepo;
 import com.houserental.repository.review.ReviewRepo;
 import com.houserental.repository.tenant.TenantRepo;
@@ -30,12 +31,23 @@ public class TenantServicesImpl implements TenantServices {
     @Autowired
     private ReviewRepo reviewRepo;
 
+
+    @Override
+    public Tenant findTenantByFbId(String fbId) {
+        return tenantRepo.findByFbId(fbId);
+    }
+
+    @Override
+    public void addTenant(Tenant tenant) {
+        tenantRepo.save(tenant);
+    }
+
     @Override
     public List<HouseInfo> listAllHouseInfo() {
         List<HouseInfo> houseInfos = new ArrayList<HouseInfo>();
         Iterable<Landlord> landlords = landlordRepo.findAll();
         for (Landlord landlord : landlords) {
-            houseInfos.addAll(landlord.getHouseOwned());
+            houseInfos.addAll(landlord.getHouseInfoList());
         }
         return houseInfos;
     }
@@ -45,7 +57,7 @@ public class TenantServicesImpl implements TenantServices {
         List<HouseInfo> houseInfos = new ArrayList<HouseInfo>();
         Iterable<Landlord> landlords = landlordRepo.findAll();
         for (Landlord landlord : landlords) {
-            houseInfos.addAll(landlord.getHouseOwned());
+            houseInfos.addAll(landlord.getHouseInfoList());
         }
 
         for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
@@ -82,12 +94,12 @@ public class TenantServicesImpl implements TenantServices {
         List<HouseInfo> houseInfos = new ArrayList<HouseInfo>();
         Iterable<Landlord> landlords = landlordRepo.findAll();
         for (Landlord landlord : landlords) {
-            houseInfos.addAll(landlord.getHouseOwned());
+            houseInfos.addAll(landlord.getHouseInfoList());
         }
 
         for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
             HouseInfo houseInfo = iterator.next();
-            List<String> reviewIds = houseInfo.getReviewIds();
+            List<String> reviewIds = houseInfo.getReviewIdList();
             if (reviewIds.contains(reviewId) == false) {
                 iterator.remove();
             }
@@ -108,11 +120,11 @@ public class TenantServicesImpl implements TenantServices {
     }
 
     @Override
-    public List<Review> listAllReview(String tenantName) {
+    public List<Review> listAllReview(String tenantFbId) {
         Iterable<Review> reviews = reviewRepo.findAll();
         List<Review> reviewList = new ArrayList<Review>();
         for(Review review: reviews){
-            if(review.getTenantName().equals(tenantName)){
+            if(review.getTenantfbId().equals(tenantFbId)){
                 reviewList.add(review);
             }
         }
