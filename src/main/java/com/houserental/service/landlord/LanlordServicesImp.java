@@ -1,6 +1,7 @@
 package com.houserental.service.landlord;
 
 import com.houserental.entity.landlord.HouseInfo;
+import com.houserental.entity.landlord.Landlord;
 import com.houserental.entity.review.Review;
 import com.houserental.repository.landlord.LandlordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,11 @@ public class LanlordServicesImp implements LandlordServices {
     public List<HouseInfo> rtvAllPhouse(String ldname) {
         return landlordRepo.findByName(ldname).getHouseOwned();
     }
+
+    @Override
+    public Landlord newLandlord(Landlord ld) {
+        return landlordRepo.save(ld);
+    }
+
+
 }

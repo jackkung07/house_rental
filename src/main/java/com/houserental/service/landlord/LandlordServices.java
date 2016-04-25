@@ -1,6 +1,7 @@
 package com.houserental.service.landlord;
 
 import com.houserental.entity.landlord.HouseInfo;
+import com.houserental.entity.landlord.Landlord;
 import com.houserental.entity.review.Review;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,7 @@ public interface LandlordServices {
 
 //    retrieve all posted house info
     public List<HouseInfo> rtvAllPhouse(String ldname);
+
+    public Landlord newLandlord(Landlord ld);
 
 }
