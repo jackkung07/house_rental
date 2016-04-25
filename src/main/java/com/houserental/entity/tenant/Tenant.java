@@ -20,6 +20,10 @@ public class Tenant {
 
     private String name;
 
+    private String phoneNum;
+
+    private String email;
+
     private List<String> reviewIdList;
 
     private List<Favorite> favoriteList;
@@ -29,10 +33,12 @@ public class Tenant {
     }
 
     @PersistenceConstructor
-    public Tenant(String facebookId, String name) {
+    public Tenant(String facebookId, String name, String phoneNum, String email) {
         super();
         this.facebookId = facebookId;
         this.name = name;
+        this.phoneNum = phoneNum;
+        this.email = email;
     }
 
     public String getTenantId() {
@@ -57,6 +63,22 @@ public class Tenant {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<String> getReviewIdList() {

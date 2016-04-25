@@ -34,7 +34,6 @@ public class HouseInfo {
     public HouseInfo() {}
 
     public HouseInfo(String landlordName, Address address, String propertyType, int numOfBathroom, int numOfBedroom, double sqrtft, double price, String description, String status, String postingDate) {
-        super();
         this.address = address;
         this.propertyType = propertyType;
         this.numOfBathroom = numOfBathroom;
