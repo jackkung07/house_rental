@@ -20,19 +20,22 @@ public interface LandlordServices {
     //add landlord info
     public void addLandlord(Landlord landlord);
 
-//    add new house posting
-    public void addHousing(String ldname, HouseInfo house);
+    //add new house posting
+    public void addHouse(String landlordFbId, HouseInfo house);
 
-//    retrieve house posting review list
+    //edit house information
+    public void editHouse(String landlordFbId, String houseId, HouseInfo houseInfo);
+
+    //change house status
+    public void changeHouseStatus(String landlordFbId, String houseId, String status);
+
+    //retrieve house posting review list
     public List<Review> rtvReviewByHid(String ldname, String houseid);
 
-//    retrieve all reviews for house posted by tis landlord
+    //retrieve all reviews for house posted by tis landlord
     public List<Review> rtvAllReview(String ldname);
 
-//    change house status
-    public void chgHouseSts(String ldname, String houseid, String status);
-
-//    retrieve all posted house info
+    //retrieve all posted house info
     public List<HouseInfo> rtvAllPhouse(String ldname);
 
     public Landlord newLandlord(Landlord ld);

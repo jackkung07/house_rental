@@ -9,7 +9,9 @@ import java.util.List;
  * Created by cheyikung on 4/19/16.
  */
 public interface LandlordRepoCustom {
-    public void addHouse(String landlordName, HouseInfo houseInfo);
+    public void addHouse(String landlordFbId, HouseInfo houseInfo);
+    public void editHouse(String landlordFbId, String houseId, HouseInfo houseInfo);
+    public void changeHouseStatus(String landlordFbId, String houseId, String status);
     public List<Review> rtvReview(String ldname, String houseid);
-    public void chgHouseSts(String landlordName, String houseid, String status);
+
 }

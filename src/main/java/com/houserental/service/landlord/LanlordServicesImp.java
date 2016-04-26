@@ -30,10 +30,19 @@ public class LanlordServicesImp implements LandlordServices {
         landlordRepo.save(landlord);
     }
 
+    @Override
+    public void addHouse(String landlordFbId, HouseInfo house) {
+        landlordRepo.addHouse(landlordFbId,house);
+    }
 
     @Override
-    public void addHousing(String ldname, HouseInfo house) {
-        landlordRepo.addHouse(ldname,house);
+    public void editHouse(String landlordFbId, String houseId, HouseInfo houseInfo) {
+        landlordRepo.editHouse(landlordFbId, houseId, houseInfo);
+    }
+
+    @Override
+    public void changeHouseStatus(String landlordFbId, String houseId, String status) {
+        landlordRepo.changeHouseStatus(landlordFbId, houseId, status);
     }
 
     @Override
@@ -46,10 +55,7 @@ public class LanlordServicesImp implements LandlordServices {
         return landlordRepo.rtvReview(ldname,"");
     }
 
-    @Override
-    public void chgHouseSts(String ldname, String houseid, String status) {
-        landlordRepo.chgHouseSts(ldname,houseid,status);
-    }
+
 
     @Override
     public List<HouseInfo> rtvAllPhouse(String ldname) {

@@ -56,6 +56,26 @@ public class main_controller {
         return false;
     }
 
+    @RequestMapping(value = "/landlordAddHouse", method = RequestMethod.POST)
+    public ResponseEntity<?> landlordAddHouse(@RequestBody HouseInfo houseInfo){
+        landlordServices.addHouse(houseInfo.getLandlordFbId(), houseInfo);
+        return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/landlordUpdateHouse/{houseId}", method = RequestMethod.POST)
+    public ResponseEntity<?> landlordUpdateHouse(@RequestBody HouseInfo houseInfo, @PathVariable("houseId") String houseId){
+        landlordServices.editHouse(houseInfo.getLandlordFbId(), houseId, houseInfo);
+        return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/landlordChangeHouseStatus/{houseId}/{status}", method = RequestMethod.POST)
+    public ResponseEntity<?> landlordChangeHouseStatus(@RequestBody HouseInfo houseInfo, @PathVariable("houseId") String houseId, @PathVariable("status") String status){
+        landlordServices.changeHouseStatus(houseInfo.getLandlordFbId(), houseId, status);
+        return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
+    }
+
+    /* ------------------------- */
+
     @RequestMapping(value = "/tenantLogin", method = RequestMethod.POST)
     public ResponseEntity<?> tenantLogIn(@RequestBody Tenant tenant){
         String fbId = tenant.getFacebookId();
@@ -175,14 +195,14 @@ public class main_controller {
     @RequestMapping(value="/addhouse/{ldname}/{address}/{city}", method = RequestMethod.POST)
     public void addhouse(@PathVariable("ldname") String ldname, @PathVariable("address") String address,@PathVariable("city") String city) {
         HouseInfo test_house = new HouseInfo();
-        test_house.setlandlordName(ldname);
+        test_house.setLandlordFbId(ldname);
         test_house.setStatus("open");
         Address test_address = new Address();
         test_address.setAddress(address);
         test_address.setCity(city);
         test_address.setState("ca");
         test_house.setAddress(test_address);
-        landlordServices.addHousing(ldname, test_house);
+        landlordServices.addHouse(ldname, test_house);
     }
 
     @RequestMapping(value="/addlandlord/{name}", method = RequestMethod.POST)
