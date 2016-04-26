@@ -37,16 +37,14 @@ public class main_controller {
     }
 
     @RequestMapping(value = "/landlordLogin", method = RequestMethod.POST)
-    public ResponseEntity<?> landlordLogIn(@RequestBody Landlord landlord){
+    public ResponseEntity landlordLogIn(@RequestBody Landlord landlord){
         String fbId = landlord.getFacebookId();
-        HttpHeaders httpHeaders = new HttpHeaders();
+
         if(findLandlordByFbId(fbId) == false){
             landlordServices.addLandlord(landlord);
-            httpHeaders.add("landlordLogin", "landlord added");
-            return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.CREATED);
+            return new ResponseEntity(HttpStatus.OK);
         }
-        httpHeaders.add("landlordLogin", "landlord exists");
-        return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     private boolean findLandlordByFbId(String fbId){
@@ -77,16 +75,15 @@ public class main_controller {
     /* ------------------------- */
 
     @RequestMapping(value = "/tenantLogin", method = RequestMethod.POST)
-    public ResponseEntity<?> tenantLogIn(@RequestBody Tenant tenant){
+    public ResponseEntity tenantLogIn(@RequestBody Tenant tenant){
         String fbId = tenant.getFacebookId();
-        HttpHeaders httpHeaders = new HttpHeaders();
+
         if(findTenantdByFbId(fbId) == false){
             tenantServices.addTenant(tenant);
-            httpHeaders.add("tenantLogin", "tenant added");
-            return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.CREATED);
+            return new ResponseEntity(HttpStatus.OK);
         }
-        httpHeaders.add("tenantLogin", "tenant exists");
-        return new ResponseEntity<Objects>(null, httpHeaders, HttpStatus.OK);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     private boolean findTenantdByFbId(String fbId){
