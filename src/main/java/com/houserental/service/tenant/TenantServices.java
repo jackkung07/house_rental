@@ -19,6 +19,9 @@ public interface TenantServices {
     //add landlord info
     public void addTenant(Tenant tenant);
 
+    //override tenant information
+    public void overrideTenant(Tenant tenant);
+
     public List<HouseInfo> listAllHouseInfo();
 
     public List<HouseInfo> searchByLocation(double lat, double lng, double radius);

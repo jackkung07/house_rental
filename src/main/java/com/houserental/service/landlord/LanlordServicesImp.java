@@ -46,6 +46,12 @@ public class LanlordServicesImp implements LandlordServices {
     }
 
     @Override
+    public void overrideLandlord(Landlord landlord) {
+        landlordRepo.save(landlord);
+    }
+
+
+    @Override
     public List<Review> rtvReviewByHid(String ldname, String houseid) {
         return landlordRepo.rtvReview(ldname,houseid);
     }

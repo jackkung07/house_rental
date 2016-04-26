@@ -42,7 +42,10 @@ public class main_controller {
 
         if(findLandlordByFbId(fbId) == false){
             landlordServices.addLandlord(landlord);
-            return new ResponseEntity(HttpStatus.OK);
+        }else{
+            Landlord localLandlord = landlordServices.findLandlordByFbId(fbId);
+            landlord.setLandlordId(localLandlord.getLandlordId());
+            landlordServices.overrideLandlord(landlord);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -80,7 +83,10 @@ public class main_controller {
 
         if(findTenantdByFbId(fbId) == false){
             tenantServices.addTenant(tenant);
-            return new ResponseEntity(HttpStatus.OK);
+        }else{
+            Tenant localTenant = tenantServices.findTenantByFbId(fbId);
+            tenant.setTenantId(localTenant.getTenantId());
+            tenantServices.overrideTenant(tenant);
         }
 
         return new ResponseEntity(HttpStatus.OK);
@@ -209,6 +215,13 @@ public class main_controller {
         landlord.setName(name);
         return landlordServices.newLandlord(landlord);
 
+    }
+
+
+    @RequestMapping(value = "/testLandlordLogin", method = RequestMethod.GET)
+    public void testLandLordLogin(){
+        Landlord landlord = new Landlord("000", "jack", "12345678", "jack@gmail.com");
+        landlordLogIn(landlord);
     }
 
 

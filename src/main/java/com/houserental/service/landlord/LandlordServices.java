@@ -29,6 +29,9 @@ public interface LandlordServices {
     //change house status
     public void changeHouseStatus(String landlordFbId, String houseId, String status);
 
+    //override landlord information
+    public void overrideLandlord(Landlord landlord);
+
     //retrieve house posting review list
     public List<Review> rtvReviewByHid(String ldname, String houseid);
 

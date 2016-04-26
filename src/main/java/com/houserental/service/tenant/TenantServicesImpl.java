@@ -43,6 +43,12 @@ public class TenantServicesImpl implements TenantServices {
     }
 
     @Override
+    public void overrideTenant(Tenant tenant) {
+        tenantRepo.save(tenant);
+    }
+
+
+    @Override
     public List<HouseInfo> listAllHouseInfo() {
         List<HouseInfo> houseInfos = new ArrayList<HouseInfo>();
         Iterable<Landlord> landlords = landlordRepo.findAll();
