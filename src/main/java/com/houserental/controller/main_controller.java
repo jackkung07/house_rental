@@ -197,24 +197,25 @@ public class main_controller {
 
     }
 
-    @RequestMapping(value="/addhouse/{ldname}/{address}/{city}", method = RequestMethod.POST)
-    public void addhouse(@PathVariable("ldname") String ldname, @PathVariable("address") String address,@PathVariable("city") String city) {
+    @RequestMapping(value="/addhouse/{fbid}/{address}/{city}", method = RequestMethod.POST)
+    public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,@PathVariable("city") String city) {
         HouseInfo test_house = new HouseInfo();
-        test_house.setLandlordFbId(ldname);
+        test_house.setLandlordFbId(fbid);
         test_house.setStatus("open");
         Address test_address = new Address();
         test_address.setAddress(address);
         test_address.setCity(city);
         test_address.setState("ca");
         test_house.setAddress(test_address);
-        landlordServices.addHouse(ldname, test_house);
+        landlordServices.addHouse(fbid, test_house);
     }
 
-    @RequestMapping(value="/addlandlord/{name}", method = RequestMethod.POST)
-    public Landlord addLandlord(@PathVariable("name") String name) {
+    @RequestMapping(value="/addlandlord/{name}/{fbid}", method = RequestMethod.POST)
+    public Landlord addLandlord(@PathVariable("name") String name, @PathVariable("fbid") String fbid) {
 
         Landlord landlord=new Landlord();
         landlord.setName(name);
+        landlord.setFacebookId(fbid);
         return landlordServices.newLandlord(landlord);
 
     }
