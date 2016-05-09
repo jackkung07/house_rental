@@ -166,6 +166,7 @@ public class main_controller {
 
         List<HouseInfo> house_list = new ArrayList<HouseInfo>();
         HouseInfo test_house = new HouseInfo();
+        test_house.setDescription("This room is for short term renting, tenant need to move out before end of year");
         test_house.setHouseId("0001");
         test_house.setStatus("open");
         Address test_address = new Address();
@@ -179,6 +180,7 @@ public class main_controller {
         test_house = new HouseInfo();
         test_house.setHouseId("0002");
         test_house.setStatus("open");
+        test_house.setDescription("This house need to be rent at least 6 months");
         test_address = new Address();
         test_address.setAddress("1300 Evans Ave");
         test_address.setCity("San Francisco");
