@@ -12,7 +12,26 @@ public class HouseSchCri {
     private String propertyType;
     private int numOfBathroom;
     private int numOfBedroom;
-    private double price;
+    private double priceH;
+    private double priceL;
+
+    public double getPriceH() {
+        return priceH;
+    }
+
+    public void setPriceH(double priceH) {
+        this.priceH = priceH;
+    }
+
+    public double getPriceL() {
+        return priceL;
+    }
+
+    public void setPriceL(double priceL) {
+        this.priceL = priceL;
+    }
+
+
 
     public String getAddress() {
         return address;
@@ -78,12 +97,5 @@ public class HouseSchCri {
         this.numOfBedroom = numOfBedroom;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
 }
