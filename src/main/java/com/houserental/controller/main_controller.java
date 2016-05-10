@@ -1,5 +1,6 @@
 package com.houserental.controller;
 
+import com.houserental.entity.HouseSchCri;
 import com.houserental.entity.landlord.Address;
 import com.houserental.entity.landlord.HouseInfo;
 import com.houserental.entity.landlord.Landlord;
@@ -196,6 +197,16 @@ public class main_controller {
 
 
     }
+
+
+    @RequestMapping(value="/search_house_list", method = RequestMethod.POST)
+    public List<HouseInfo> search_house_list(@RequestBody HouseSchCri criteria) {
+
+            return tenantServices.listAllHouseInfo();
+
+    }
+
+
 
     @RequestMapping(value="/addhouse/{fbid}/{address}/{city}", method = RequestMethod.POST)
     public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,@PathVariable("city") String city) {
