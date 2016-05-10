@@ -1,5 +1,6 @@
 package com.houserental.service.tenant;
 
+import com.houserental.entity.HouseSchCri;
 import com.houserental.entity.landlord.HouseInfo;
 import com.houserental.entity.landlord.Landlord;
 import com.houserental.entity.review.Review;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by cheyikung on 4/19/16.
@@ -76,6 +79,39 @@ public class TenantServicesImpl implements TenantServices {
 
         return houseInfos;
     }
+
+    @Override
+    public List<HouseInfo> searchByCriteria(HouseSchCri criteria) {
+        List<HouseInfo> houseInfos=new ArrayList<HouseInfo>();
+        Iterable<Landlord> landlords = null;
+        String pattern = "(.*)";
+        Pattern r = null;
+        if(criteria.getAddress().equals(""))
+        {
+            houseInfos = searchByLocation(criteria.getLat(), criteria.getLng(), 10000);
+        }
+        else
+        {
+            landlords = landlordRepo.findAll();
+            for (Landlord landlord : landlords) {
+                houseInfos.addAll(landlord.getHouseInfoList());
+            }
+            for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
+                HouseInfo houseInfo = iterator.next();
+                String fulladd = houseInfo.getAddress().getAddress()+" "+houseInfo.getAddress().getCity() + " "+houseInfo.getAddress().getState();
+                r = Pattern.compile(pattern+criteria.getAddress()+pattern);
+                Matcher m = r.matcher(fulladd);
+                if(!m.find()){
+                    iterator.remove();
+                }
+            }
+        }
+
+
+
+        return houseInfos;
+    }
+
 
     private static double distanceCalculator(double lat1, double lng1, double lat2, double lng2) {
         double theta = lng1 - lng2;

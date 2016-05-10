@@ -199,10 +199,19 @@ public class main_controller {
     }
 
 
-    @RequestMapping(value="/search_house_list", method = RequestMethod.POST)
-    public List<HouseInfo> search_house_list(@RequestBody HouseSchCri criteria) {
+    @RequestMapping(value="/search_house_list/{criteria}", method = RequestMethod.GET)
+    public List<HouseInfo> search_house_list(@PathVariable("criteria") HouseSchCri criteria) {
+        List<HouseInfo> schlst = new ArrayList<HouseInfo>();
 
-            return tenantServices.listAllHouseInfo();
+        criteria.getCity();
+        criteria.getPriceH();
+        criteria.getPriceL();
+        criteria.getPropertyType();
+
+        schlst = tenantServices.searchByCriteria(criteria);
+
+
+            return schlst;
 
     }
 
