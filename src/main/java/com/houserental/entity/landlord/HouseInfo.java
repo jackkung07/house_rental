@@ -31,6 +31,10 @@ public class HouseInfo {
 
     private String postingDate;
 
+    private String ld_email;
+
+    private String ld_phone;
+
     public HouseInfo() {}
 
     public HouseInfo(String landlordFbId, Address address, String propertyType, int numOfBathroom, int numOfBedroom, double sqrtft, double price, String description, String status, String postingDate) {
@@ -144,5 +148,21 @@ public class HouseInfo {
 
     public void addReviewId(String reviewId){
         reviewIdList.add(reviewId);
+    }
+
+    public String getLd_email() {
+        return ld_email;
+    }
+
+    public void setLd_email(String ld_email) {
+        this.ld_email = ld_email;
+    }
+
+    public String getLd_phone() {
+        return ld_phone;
+    }
+
+    public void setLd_phone(String ld_phone) {
+        this.ld_phone = ld_phone;
     }
 }
