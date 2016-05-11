@@ -37,25 +37,32 @@ public class main_controller {
         return "hello";
     }
 
+    // done
+    // do not delete
     @RequestMapping(value = "/landlordLogin", method = RequestMethod.POST)
-    public ResponseEntity landlordLogIn(@RequestBody Landlord landlord){
-        String fbId = landlord.getFacebookId();
-
-        if(findLandlordByFbId(fbId) == false){
+    public Landlord landlordLogIn(@RequestBody Landlord landlord){
+        if(landlordServices.findLandlordByFbId(landlord.getFacebookId())== null){
             landlordServices.addLandlord(landlord);
         }else{
-            Landlord localLandlord = landlordServices.findLandlordByFbId(fbId);
-            landlord.setLandlordId(localLandlord.getLandlordId());
-            landlordServices.overrideLandlord(landlord);
+            landlord = landlordServices.findLandlordByFbId(landlord.getFacebookId());
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return landlord;
     }
 
-    private boolean findLandlordByFbId(String fbId){
-        if(landlordServices.findLandlordByFbId(fbId)!= null){
-            return true;
+    // done
+    // do not delete
+    @RequestMapping(value = "/landlordUpdate", method = RequestMethod.POST)
+    public Landlord landlordUpdate(@RequestBody Landlord landlord){
+        //add lat lng
+        List<HouseInfo> houseInfoList = landlord.getHouseInfoList();
+        for(HouseInfo houseInfo : houseInfoList){
+            Address address = houseInfo.getAddress();
+            address.setLocation();
+            houseInfo.setAddress(address);
         }
-        return false;
+        landlord.setHouseInfoList(houseInfoList);
+        landlordServices.overrideLandlord(landlord);
+        return landlord;
     }
 
     @RequestMapping(value = "/landlordAddHouse", method = RequestMethod.POST)
@@ -79,29 +86,12 @@ public class main_controller {
     /* ------------------------- */
 
     @RequestMapping(value = "/tenantLogin", method = RequestMethod.POST)
-    public ResponseEntity tenantLogIn(@RequestBody Tenant tenant){
-        String fbId = tenant.getFacebookId();
-
-        if(findTenantdByFbId(fbId) == false){
+    public Tenant tenantLogIn(@RequestBody Tenant tenant){
+        if(tenantServices.findTenantByFbId(tenant.getFacebookId()) == null){
             tenantServices.addTenant(tenant);
-        }else{
-            Tenant localTenant = tenantServices.findTenantByFbId(fbId);
-            tenant.setTenantId(localTenant.getTenantId());
-            tenantServices.overrideTenant(tenant);
         }
-
-        return new ResponseEntity(HttpStatus.OK);
+        return tenant;
     }
-
-    private boolean findTenantdByFbId(String fbId){
-        if(tenantServices.findTenantByFbId(fbId)!= null){
-            return true;
-        }
-        return false;
-    }
-
-
-
 
     @RequestMapping(value="/tenant", method = RequestMethod.GET)
     public Tenant tenant_testing() {
