@@ -209,8 +209,11 @@ public class main_controller {
 
 
 
-    @RequestMapping(value="/addhouse/{fbid}/{address}/{city}/{price}", method = RequestMethod.POST)
-    public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,@PathVariable("city") String city, @PathVariable("price") String price) {
+    @RequestMapping(value="/addhouse/{fbid}/{address}/{city}/{price}/{description}/{email}/{phone}", method = RequestMethod.POST)
+    public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,
+                         @PathVariable("city") String city, @PathVariable("price") String price,
+                         @PathVariable("description") String description, @PathVariable("email") String email,
+                         @PathVariable("phone") String phone) {
         HouseInfo test_house = new HouseInfo();
         test_house.setLandlordFbId(fbid);
         test_house.setStatus("open");
@@ -220,6 +223,9 @@ public class main_controller {
         test_address.setState("ca");
         test_house.setAddress(test_address);
         test_house.setPrice(Double.valueOf(price));
+        test_house.setDescription(description);
+        test_house.setLd_email(email);
+        test_house.setLd_phone(phone);
         landlordServices.addHouse(fbid, test_house);
     }
 
