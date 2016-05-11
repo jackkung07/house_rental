@@ -80,35 +80,74 @@ public class TenantServicesImpl implements TenantServices {
         return houseInfos;
     }
 
+    public void addressmatching(List<HouseInfo> houseInfos, String content){
+
+        Pattern r = null;
+        String pattern = "(.*)";
+        content = content.toLowerCase();
+        Iterable<Landlord> landlords = landlordRepo.findAll();
+        for (Landlord landlord : landlords) {
+            houseInfos.addAll(landlord.getHouseInfoList());
+        }
+        for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
+            HouseInfo houseInfo = iterator.next();
+            String fulladd = houseInfo.getAddress().getAddress()+" "+houseInfo.getAddress().getCity() + " "+houseInfo.getAddress().getState();
+            fulladd=fulladd.toLowerCase();
+            r = Pattern.compile(pattern+content+pattern);
+            Matcher m = r.matcher(fulladd);
+            if(!m.find()){
+                iterator.remove();
+            }
+        }
+    }
+
     @Override
     public List<HouseInfo> searchByCriteria(HouseSchCri criteria) {
         List<HouseInfo> houseInfos=new ArrayList<HouseInfo>();
         Iterable<Landlord> landlords = null;
         String pattern = "(.*)";
-        Pattern r = null;
-        if(criteria.getAddress().equals(""))
+        String content="";
+        if(criteria.getAddress()==null||criteria.getAddress().equals(""))//user search by clicking the search button in detail searching screen
         {
-            houseInfos = searchByLocation(criteria.getLat(), criteria.getLng(), 10000);
-        }
-        else
-        {
-            landlords = landlordRepo.findAll();
-            for (Landlord landlord : landlords) {
-                houseInfos.addAll(landlord.getHouseInfoList());
+            if(criteria.getCity().equals("")&&criteria.getState().equals(""))
+            {
+                houseInfos = searchByLocation(criteria.getLat(), criteria.getLng(), 10000);
             }
-            for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
-                HouseInfo houseInfo = iterator.next();
-                String fulladd = houseInfo.getAddress().getAddress()+" "+houseInfo.getAddress().getCity() + " "+houseInfo.getAddress().getState();
-                r = Pattern.compile(pattern+criteria.getAddress()+pattern);
-                Matcher m = r.matcher(fulladd);
-                if(!m.find()){
-                    iterator.remove();
-                }
+            else
+            {
+                content = criteria.getCity().trim()+pattern+criteria.getState().trim();
+                addressmatching(houseInfos, content);
             }
         }
+        else    //user search by clicking the description searching on the top of screen
+        {
+            content = criteria.getAddress();
+            addressmatching(houseInfos, content);
 
+//            landlords = landlordRepo.findAll();
+//            for (Landlord landlord : landlords) {
+//                houseInfos.addAll(landlord.getHouseInfoList());
+//            }
+//            for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
+//                HouseInfo houseInfo = iterator.next();
+//                String fulladd = houseInfo.getAddress().getAddress()+" "+houseInfo.getAddress().getCity() + " "+houseInfo.getAddress().getState();
+//                r = Pattern.compile(pattern+criteria.getAddress()+pattern);
+//                Matcher m = r.matcher(fulladd);
+//                if(!m.find()){
+//                    iterator.remove();
+//                }
+//            }
+        }
 
-
+        for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
+            HouseInfo houseInfo = iterator.next();
+            if(criteria.getPropertyType()!=null&&!criteria.getPropertyType().equals("")&&!criteria.getPropertyType().equals("All")&&!criteria.getPropertyType().equals(houseInfo.getPropertyType())
+                    || criteria.getPriceL()>0&&criteria.getPriceL()>houseInfo.getPrice()
+                    || criteria.getPriceH()>0&&criteria.getPriceH()<houseInfo.getPrice())
+            {
+                iterator.remove();
+            }
+        }
         return houseInfos;
     }
 

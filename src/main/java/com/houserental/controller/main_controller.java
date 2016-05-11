@@ -199,16 +199,18 @@ public class main_controller {
     }
 
 
-    @RequestMapping(value="/search_house_list/{criteria}", method = RequestMethod.GET)
-    public List<HouseInfo> search_house_list(@PathVariable("criteria") HouseSchCri criteria) {
-        List<HouseInfo> schlst = new ArrayList<HouseInfo>();
+    @RequestMapping(value="/search_house_list", method = RequestMethod.POST)
+    public List<HouseInfo> search_house_list(@RequestBody HouseSchCri criteria) {
 
+        criteria.getLat();
+        criteria.getLng();
+        criteria.getAddress();
         criteria.getCity();
         criteria.getPriceH();
         criteria.getPriceL();
         criteria.getPropertyType();
 
-        schlst = tenantServices.searchByCriteria(criteria);
+        List<HouseInfo> schlst  = tenantServices.searchByCriteria(criteria);
 
 
             return schlst;
@@ -217,8 +219,8 @@ public class main_controller {
 
 
 
-    @RequestMapping(value="/addhouse/{fbid}/{address}/{city}", method = RequestMethod.POST)
-    public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,@PathVariable("city") String city) {
+    @RequestMapping(value="/addhouse/{fbid}/{address}/{city}/{price}", method = RequestMethod.POST)
+    public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,@PathVariable("city") String city, @PathVariable("price") String price) {
         HouseInfo test_house = new HouseInfo();
         test_house.setLandlordFbId(fbid);
         test_house.setStatus("open");
@@ -227,6 +229,7 @@ public class main_controller {
         test_address.setCity(city);
         test_address.setState("ca");
         test_house.setAddress(test_address);
+        test_house.setPrice(Double.valueOf(price));
         landlordServices.addHouse(fbid, test_house);
     }
 
