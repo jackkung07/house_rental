@@ -89,6 +89,8 @@ public class main_controller {
     public Tenant tenantLogIn(@RequestBody Tenant tenant){
         if(tenantServices.findTenantByFbId(tenant.getFacebookId()) == null){
             tenantServices.addTenant(tenant);
+        }else{
+            tenant = tenantServices.findTenantByFbId(tenant.getFacebookId());
         }
         return tenant;
     }
