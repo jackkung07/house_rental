@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,9 +25,9 @@ public class Tenant {
 
     private String email;
 
-    private List<String> reviewIdList;
+    private List<String> reviewIdList = new ArrayList<String>();
 
-    private List<Favorite> favoriteList;
+    private List<Favorite> favoriteList = new ArrayList<Favorite>();
 
     public  Tenant() {
 

@@ -3,6 +3,7 @@ package com.houserental.service.tenant;
 import com.houserental.entity.HouseSchCri;
 import com.houserental.entity.landlord.HouseInfo;
 import com.houserental.entity.review.Review;
+import com.houserental.entity.tenant.Favorite;
 import com.houserental.entity.tenant.Tenant;
 import org.springframework.stereotype.Service;
 

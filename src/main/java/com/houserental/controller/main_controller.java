@@ -4,6 +4,7 @@ import com.houserental.entity.HouseSchCri;
 import com.houserental.entity.landlord.Address;
 import com.houserental.entity.landlord.HouseInfo;
 import com.houserental.entity.landlord.Landlord;
+import com.houserental.entity.review.Review;
 import com.houserental.entity.tenant.Favorite;
 import com.houserental.entity.tenant.Tenant;
 import com.houserental.service.landlord.LandlordServices;
@@ -40,10 +41,10 @@ public class main_controller {
     // done
     // do not delete
     @RequestMapping(value = "/landlordLogin", method = RequestMethod.POST)
-    public Landlord landlordLogIn(@RequestBody Landlord landlord){
-        if(landlordServices.findLandlordByFbId(landlord.getFacebookId())== null){
+    public Landlord landlordLogIn(@RequestBody Landlord landlord) {
+        if (landlordServices.findLandlordByFbId(landlord.getFacebookId()) == null) {
             landlordServices.addLandlord(landlord);
-        }else{
+        } else {
             landlord = landlordServices.findLandlordByFbId(landlord.getFacebookId());
         }
         return landlord;
@@ -52,13 +53,17 @@ public class main_controller {
     // done
     // do not delete
     @RequestMapping(value = "/landlordUpdate", method = RequestMethod.POST)
-    public Landlord landlordUpdate(@RequestBody Landlord landlord){
+    public Landlord landlordUpdate(@RequestBody Landlord landlord) {
         //add lat lng
         List<HouseInfo> houseInfoList = landlord.getHouseInfoList();
-        for(HouseInfo houseInfo : houseInfoList){
+//        for(HouseInfo houseInfo : houseInfoList){
+        for (int i = 0; i < houseInfoList.size(); i++) {
+            HouseInfo houseInfo = houseInfoList.get(i);
+            houseInfo.setHouseId(Integer.toString(i));
             Address address = houseInfo.getAddress();
             address.setLocation();
             houseInfo.setAddress(address);
+            houseInfoList.set(i, houseInfo);
         }
         landlord.setHouseInfoList(houseInfoList);
         landlordServices.overrideLandlord(landlord);
@@ -66,36 +71,44 @@ public class main_controller {
     }
 
     @RequestMapping(value = "/landlordAddHouse", method = RequestMethod.POST)
-    public ResponseEntity<?> landlordAddHouse(@RequestBody HouseInfo houseInfo){
+    public ResponseEntity<?> landlordAddHouse(@RequestBody HouseInfo houseInfo) {
         landlordServices.addHouse(houseInfo.getLandlordFbId(), houseInfo);
         return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/landlordUpdateHouse/{houseId}", method = RequestMethod.POST)
-    public ResponseEntity<?> landlordUpdateHouse(@RequestBody HouseInfo houseInfo, @PathVariable("houseId") String houseId){
+    public ResponseEntity<?> landlordUpdateHouse(@RequestBody HouseInfo houseInfo, @PathVariable("houseId") String houseId) {
         landlordServices.editHouse(houseInfo.getLandlordFbId(), houseId, houseInfo);
         return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/landlordChangeHouseStatus/{houseId}/{status}", method = RequestMethod.POST)
-    public ResponseEntity<?> landlordChangeHouseStatus(@RequestBody HouseInfo houseInfo, @PathVariable("houseId") String houseId, @PathVariable("status") String status){
+    public ResponseEntity<?> landlordChangeHouseStatus(@RequestBody HouseInfo houseInfo, @PathVariable("houseId") String houseId, @PathVariable("status") String status) {
         landlordServices.changeHouseStatus(houseInfo.getLandlordFbId(), houseId, status);
         return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
     }
 
     /* ------------------------- */
 
+    // done
+    // do not delete
     @RequestMapping(value = "/tenantLogin", method = RequestMethod.POST)
-    public Tenant tenantLogIn(@RequestBody Tenant tenant){
-        if(tenantServices.findTenantByFbId(tenant.getFacebookId()) == null){
+    public Tenant tenantLogIn(@RequestBody Tenant tenant) {
+        if (tenantServices.findTenantByFbId(tenant.getFacebookId()) == null) {
             tenantServices.addTenant(tenant);
-        }else{
+        } else {
             tenant = tenantServices.findTenantByFbId(tenant.getFacebookId());
         }
         return tenant;
     }
 
-    @RequestMapping(value="/tenant", method = RequestMethod.GET)
+    @RequestMapping(value = "/tenantUpdate", method = RequestMethod.POST)
+    public Tenant tenantUpdate(@RequestBody Tenant tenant) {
+        tenantServices.overrideTenant(tenant);
+        return tenant;
+    }
+
+    @RequestMapping(value = "/tenant", method = RequestMethod.GET)
     public Tenant tenant_testing() {
 
         System.out.println("xxx");
@@ -119,7 +132,7 @@ public class main_controller {
 //        return new ResponseEntity<Tenant>(test_tenant, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/landlord", method = RequestMethod.GET)
+    @RequestMapping(value = "/landlord", method = RequestMethod.GET)
     public Landlord landlord_testing() {
 
 
@@ -154,7 +167,7 @@ public class main_controller {
         return test_landlord;
     }
 
-    @RequestMapping(value="/house_list", method = RequestMethod.GET)
+    @RequestMapping(value = "/house_list", method = RequestMethod.GET)
     public List<HouseInfo> house_list_testing() {
 
         List<HouseInfo> house_list = new ArrayList<HouseInfo>();
@@ -181,23 +194,32 @@ public class main_controller {
         test_house.setAddress(test_address);
         house_list.add(test_house);
 
-        if(tenantServices.listAllHouseInfo().size()==0)
+        if (tenantServices.listAllHouseInfo().size() == 0)
             return house_list;
         else
             return tenantServices.listAllHouseInfo();
 
 
-
     }
 
 
-    @RequestMapping(value="/search_house_list", method = RequestMethod.POST)
+    @RequestMapping(value = "/search_house_list", method = RequestMethod.POST)
     public List<HouseInfo> search_house_list(@RequestBody HouseSchCri criteria) {
         List<HouseInfo> schlst  = tenantServices.searchByCriteria(criteria);
             return schlst;
     }
 
 
+    @RequestMapping(value = "/getFavoriteList", method = RequestMethod.POST)
+    public List<HouseInfo> getFavoriteList(@RequestBody List<Favorite> favoriteList) {
+        List<HouseInfo> houseInfoList = new ArrayList<HouseInfo>();
+        for (Favorite favorite : favoriteList) {
+            Landlord landlord = landlordServices.findLandlordByFbId(favorite.getLandlordfbId());
+            HouseInfo houseInfo = landlord.getHouseById(favorite.getHouseId());
+            houseInfoList.add(houseInfo);
+        }
+        return houseInfoList;
+    }
 
     @RequestMapping(value="/addhouse/{fbid}/{address}/{city}/{price}/{description}/{email}/{phone}", method = RequestMethod.POST)
     public void addhouse(@PathVariable("fbid") String fbid, @PathVariable("address") String address,
