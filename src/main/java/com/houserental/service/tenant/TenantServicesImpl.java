@@ -111,7 +111,7 @@ public class TenantServicesImpl implements TenantServices {
         {
             if((criteria.getCity()==null||criteria.getCity().equals(""))&&(criteria.getState()==null||criteria.getState().equals("")))
             {
-                houseInfos = searchByLocation(criteria.getLat(), criteria.getLng(), 10000);
+                houseInfos = searchByLocation(criteria.getLat(), criteria.getLng(), 1000);
             }
             else
             {
@@ -125,27 +125,15 @@ public class TenantServicesImpl implements TenantServices {
         {
             content = criteria.getAddress();
             addressmatching(houseInfos, content);
-
-//            landlords = landlordRepo.findAll();
-//            for (Landlord landlord : landlords) {
-//                houseInfos.addAll(landlord.getHouseInfoList());
-//            }
-//            for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
-//                HouseInfo houseInfo = iterator.next();
-//                String fulladd = houseInfo.getAddress().getAddress()+" "+houseInfo.getAddress().getCity() + " "+houseInfo.getAddress().getState();
-//                r = Pattern.compile(pattern+criteria.getAddress()+pattern);
-//                Matcher m = r.matcher(fulladd);
-//                if(!m.find()){
-//                    iterator.remove();
-//                }
-//            }
         }
 
         for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
             HouseInfo houseInfo = iterator.next();
             if(criteria.getPropertyType()!=null&&!criteria.getPropertyType().equals("")&&!criteria.getPropertyType().equals("All")&&!criteria.getPropertyType().equals(houseInfo.getPropertyType())
                     || criteria.getPriceL()>0&&criteria.getPriceL()>houseInfo.getPrice()
-                    || criteria.getPriceH()>0&&criteria.getPriceH()<houseInfo.getPrice())
+                    || criteria.getPriceH()>0&&criteria.getPriceH()<houseInfo.getPrice()
+                    || houseInfo.getStatus()!=null&&houseInfo.getStatus().equals("Cancelled")
+                    )
             {
                 iterator.remove();
             }
