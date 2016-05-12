@@ -46,7 +46,7 @@ public class TenantRepoImpl implements TenantRepoCustom{
 
         Review rev = reviewRepo.save(review);
 
-        house.addReviewId(rev.getReviewId());
+//        house.addReviewId(rev.getReviewId());
         tenant.addReviewId(rev.getReviewId());
 
         landlord.setHouseById(houseId, house);

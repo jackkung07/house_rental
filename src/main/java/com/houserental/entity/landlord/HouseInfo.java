@@ -23,7 +23,7 @@ public class HouseInfo {
 
     private double price;
 
-    private List<String> reviewIdList;
+    private int numOfViews;
 
     private String description;
 
@@ -114,14 +114,6 @@ public class HouseInfo {
         this.price = price;
     }
 
-    public List<String> getReviewIdList() {
-        return reviewIdList;
-    }
-
-    public void setReviewIdList(List<String> reviewIdList) {
-        this.reviewIdList = reviewIdList;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -146,10 +138,6 @@ public class HouseInfo {
         this.postingDate = postingDate;
     }
 
-    public void addReviewId(String reviewId){
-        reviewIdList.add(reviewId);
-    }
-
     public String getLd_email() {
         return ld_email;
     }
@@ -164,5 +152,13 @@ public class HouseInfo {
 
     public void setLd_phone(String ld_phone) {
         this.ld_phone = ld_phone;
+    }
+
+    public int getNumOfViews() {
+        return numOfViews;
+    }
+
+    public void setNumOfViews(int numOfViews) {
+        this.numOfViews = numOfViews;
     }
 }

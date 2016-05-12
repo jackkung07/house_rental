@@ -29,11 +29,5 @@ public interface TenantServices {
     public List<HouseInfo> searchByLocation(double lat, double lng, double radius);
     public List<HouseInfo> searchByCriteria(HouseSchCri criteria);
 
-    public List<HouseInfo> searchByReviewId(String reviewId);
-
-    public void addFavorite(String tenantName, String landlordName, String houseId);
-
-    public void addReview(String tenantName, String landlordName, String houseId);
-
-    public List<Review> listAllReview(String tenantName);
+    public String incrementViewCount(String houseId, String landlordFbId);
 }

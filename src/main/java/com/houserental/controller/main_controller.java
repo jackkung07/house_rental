@@ -9,6 +9,8 @@ import com.houserental.entity.tenant.Favorite;
 import com.houserental.entity.tenant.Tenant;
 import com.houserental.service.landlord.LandlordServices;
 import com.houserental.service.tenant.TenantServices;
+import com.mongodb.util.JSON;
+import com.sun.tools.internal.ws.processor.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,9 @@ public class main_controller {
     public String printWelcome() {
         return "hello";
     }
+
+
+    //---------------Landlord------------
 
     // done
     // do not delete
@@ -88,7 +93,30 @@ public class main_controller {
         return new ResponseEntity<Objects>(null, null, HttpStatus.OK);
     }
 
-    /* ------------------------- */
+    //-------------------------
+
+    //-------------num of view count--------
+
+    @RequestMapping(value = "/incrementViewCount", method = RequestMethod.POST)
+    public ResponseEntity<String> incrementViewCount(@RequestBody HouseInfo houseInfo){
+
+
+        System.out.println("increment view count: house id:" + houseInfo.getHouseId() + " landlord fb id: " + houseInfo.getLandlordFbId());
+
+        String result = tenantServices.incrementViewCount(houseInfo.getHouseId(), houseInfo.getLandlordFbId());
+
+        if(result == null) {
+            return new ResponseEntity<String>("", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<String>(result, HttpStatus.NOT_FOUND);
+    }
+
+    //------------------------------
+
+
+
+    //-------------tenant------------
 
     // done
     // do not delete
@@ -102,6 +130,8 @@ public class main_controller {
         return tenant;
     }
 
+    // done
+    // do not delete
     @RequestMapping(value = "/tenantUpdate", method = RequestMethod.POST)
     public Tenant tenantUpdate(@RequestBody Tenant tenant) {
         tenantServices.overrideTenant(tenant);

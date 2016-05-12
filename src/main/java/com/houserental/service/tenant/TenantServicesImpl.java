@@ -153,6 +153,30 @@ public class TenantServicesImpl implements TenantServices {
         return houseInfos;
     }
 
+    @Override
+    public String incrementViewCount(String houseId, String landlordFbId) {
+        Landlord landlord = landlordRepo.findByFbId(landlordFbId);
+        List<HouseInfo> houseInfoList = landlord.getHouseInfoList();
+        boolean isFound = false;
+        for(int i = 0; i < houseInfoList.size(); i++){
+            HouseInfo houseInfo = houseInfoList.get(i);
+            if(houseInfo.getHouseId().equals(houseId)){
+                int numOfViews = houseInfo.getNumOfViews();
+                numOfViews++;
+                houseInfo.setNumOfViews(numOfViews);
+                houseInfoList.set(i, houseInfo);
+                isFound = true;
+                break;
+            }
+        }
+        if(isFound) {
+            landlord.setHouseInfoList(houseInfoList);
+            landlordRepo.save(landlord);
+            return null;
+        }
+        return "can't add view count";
+    }
+
 
     private static double distanceCalculator(double lat1, double lng1, double lat2, double lng2) {
         double theta = lng1 - lng2;
@@ -172,47 +196,5 @@ public class TenantServicesImpl implements TenantServices {
         return (rad * 180 / Math.PI);
     }
 
-    @Override
-    public List<HouseInfo> searchByReviewId(String reviewId) {
-        List<HouseInfo> houseInfos = new ArrayList<HouseInfo>();
-        Iterable<Landlord> landlords = landlordRepo.findAll();
-        for (Landlord landlord : landlords) {
-            houseInfos.addAll(landlord.getHouseInfoList());
-        }
 
-        for (Iterator<HouseInfo> iterator = houseInfos.iterator(); iterator.hasNext(); ) {
-            HouseInfo houseInfo = iterator.next();
-            List<String> reviewIds = houseInfo.getReviewIdList();
-            if (reviewIds.contains(reviewId) == false) {
-                iterator.remove();
-            }
-        }
-        return houseInfos;
-    }
-
-    @Override
-    public void addFavorite(String tenantName, String landlordName, String houseId) {
-        Favorite favorite = new Favorite();
-        tenantRepo.addFavorite(tenantName, landlordName, houseId, favorite);
-    }
-
-    @Override
-    public void addReview(String tenantName, String landlordName, String houseId){
-        Review review = new Review();
-        tenantRepo.addReview(tenantName, landlordName, houseId, review);
-    }
-
-
-
-    @Override
-    public List<Review> listAllReview(String tenantFbId) {
-        Iterable<Review> reviews = reviewRepo.findAll();
-        List<Review> reviewList = new ArrayList<Review>();
-        for(Review review: reviews){
-            if(review.getTenantfbId().equals(tenantFbId)){
-                reviewList.add(review);
-            }
-        }
-        return reviewList;
-    }
 }
