@@ -109,13 +109,15 @@ public class TenantServicesImpl implements TenantServices {
         String content="";
         if(criteria.getAddress()==null||criteria.getAddress().equals(""))//user search by clicking the search button in detail searching screen
         {
-            if(criteria.getCity().equals("")&&criteria.getState().equals(""))
+            if((criteria.getCity()==null||criteria.getCity().equals(""))&&(criteria.getState()==null||criteria.getState().equals("")))
             {
                 houseInfos = searchByLocation(criteria.getLat(), criteria.getLng(), 10000);
             }
             else
             {
-                content = criteria.getCity().trim()+pattern+criteria.getState().trim();
+                String city = criteria.getCity()==null?"":criteria.getCity().trim();
+                String state = criteria.getState()==null?"":criteria.getState().trim();
+                content = city+pattern+state;
                 addressmatching(houseInfos, content);
             }
         }
