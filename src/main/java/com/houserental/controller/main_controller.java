@@ -193,20 +193,8 @@ public class main_controller {
 
     @RequestMapping(value="/search_house_list", method = RequestMethod.POST)
     public List<HouseInfo> search_house_list(@RequestBody HouseSchCri criteria) {
-
-        criteria.getLat();
-        criteria.getLng();
-        criteria.getAddress();
-        criteria.getCity();
-        criteria.getPriceH();
-        criteria.getPriceL();
-        criteria.getPropertyType();
-
         List<HouseInfo> schlst  = tenantServices.searchByCriteria(criteria);
-
-
             return schlst;
-
     }
 
 
