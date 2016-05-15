@@ -7,6 +7,7 @@ import com.houserental.entity.landlord.Landlord;
 import com.houserental.entity.review.Review;
 import com.houserental.entity.tenant.Favorite;
 import com.houserental.entity.tenant.Tenant;
+import com.houserental.service.email.ApplicationMailer;
 import com.houserental.service.landlord.LandlordServices;
 import com.houserental.service.tenant.TenantServices;
 import com.mongodb.util.JSON;
@@ -34,6 +35,8 @@ public class main_controller {
     LandlordServices landlordServices;
     @Autowired
     TenantServices tenantServices;
+    @Autowired
+    ApplicationMailer applicationMailer;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printWelcome() {
@@ -72,6 +75,11 @@ public class main_controller {
         }
         landlord.setHouseInfoList(houseInfoList);
         landlordServices.overrideLandlord(landlord);
+        try {
+            applicationMailer.sendMail(landlord.getEmail(), "House Information Created / Updated", "Your House Information has been created / updated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return landlord;
     }
 
